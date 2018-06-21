@@ -5,7 +5,7 @@ const { createCanvas } = require("canvas");
 
 // constants
 const SIZE = 300;
-const LIGHTNESS = 75;
+const LIGHTNESS = 60;
 
 const generateDirection = chance => {
   const angle = Math.ceil(chance.random() * 360);
@@ -48,7 +48,7 @@ const seedIdentigram = oid => {
   };
 };
 
-const drawIdentigram = (oid, showAngle = false) => {
+const drawIdentigramToCanvas = (oid, showAngle = false) => {
   const canvas = createCanvas(SIZE, SIZE);
   const ctx = canvas.getContext("2d");
 
@@ -89,9 +89,13 @@ const drawIdentigram = (oid, showAngle = false) => {
     ctx.stroke();
   }
 
-  // save as png
+  return canvas;
+};
+
+const saveIdentigramToPNG = oid => {
+  const canvas = drawIdentigramToCanvas(oid);
   const date = new Date();
-  const filename = `${oid}.${date.getMonth()}.${date.getDate()}.${date.getHours()}.${date.getMinutes()}.${date.getSeconds()}.png`;
+  const filename = `${oid}.${date.getTime()}.png`;
   const out = fs.createWriteStream(__dirname + `/grams/${filename}`);
   const stream = canvas.createPNGStream();
   stream.pipe(out);
@@ -100,13 +104,18 @@ const drawIdentigram = (oid, showAngle = false) => {
   });
 };
 
-// test hash output on oids
-drawIdentigram("59b6bc3a25ce4b00524dab95"); // me
-drawIdentigram("544ee41d84f725e1da48e8ad");
-drawIdentigram("52582704cc5af7000d21c46d");
-drawIdentigram("57eead730f1d9d00fa1bc768");
-drawIdentigram("58b9d525dc4afc0051f80952");
-drawIdentigram("58701593d0007f003fc4353c");
-drawIdentigram("587f94e4d53289015734319e");
-drawIdentigram("530d049846d2de000c5717ed");
-drawIdentigram("54a39c26cfa427489dd386e6");
+const test = () => {
+  // test hash output on oids
+  saveIdentigramToPNG("59b6bc3a25ce4b00524dab95"); // me
+  saveIdentigramToPNG("544ee41d84f725e1da48e8ad");
+  saveIdentigramToPNG("52582704cc5af7000d21c46d");
+  saveIdentigramToPNG("57eead730f1d9d00fa1bc768");
+  saveIdentigramToPNG("58b9d525dc4afc0051f80952");
+  saveIdentigramToPNG("58701593d0007f003fc4353c");
+  saveIdentigramToPNG("587f94e4d53289015734319e");
+  saveIdentigramToPNG("530d049846d2de000c5717ed");
+  saveIdentigramToPNG("54a39c26cfa427489dd386e6");
+};
+
+test()
+module.exports = { drawIdentigramToCanvas };
