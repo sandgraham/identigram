@@ -1,7 +1,7 @@
 {
   "name": "identigram",
   "version": "0.0.1",
-  "description": "generate a unique identigram based on a uuid",
+  "description": "generate a unique identigram based on a mongo oid",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
