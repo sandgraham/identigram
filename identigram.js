@@ -117,5 +117,4 @@ const test = () => {
   saveIdentigramToPNG("54a39c26cfa427489dd386e6");
 };
 
-test()
 module.exports = { drawIdentigramToCanvas };
